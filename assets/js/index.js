@@ -4,7 +4,10 @@ import { renderCarouselView } from "./carousel.js";
 const homeSection = document.querySelector("#home");
 const carouselSection = document.querySelector("#carousel");
 const notFoundSection = document.querySelector("#not-found");
-
+const confirmationModal = document.querySelector("#confirmation-modal");
+const cancelBtn = document.querySelector(".modal__btn_type_cancel");
+const confirmBtn = document.querySelector(".modal__btn_type_confirm");
+let currentImageEl = null;
 function renderHomeView() {
   homeSection.style.display = "block";
   carouselSection.style.display = "none";
@@ -28,9 +31,20 @@ function renderHomeView() {
 
     const deleteBtn = cloneEl.querySelector(".gallery__btn_type_delete");
     deleteBtn.addEventListener("click", () => {
-      cloneEl.remove();
+      confirmationModal.classList.add("modal_visible");
+      currentImageEl = cloneEl;
     });
 
+    cancelBtn.addEventListener("click", () => {
+      confirmationModal.classList.remove("modal_visible");
+      currentImageEl = null;
+    });
+
+    confirmBtn.addEventListener("click", () => {
+      confirmationModal.classList.remove("modal_visible");
+      currentImageEl.remove();
+      currentImageEl = null;
+    });
     return cloneEl;
   }
 
